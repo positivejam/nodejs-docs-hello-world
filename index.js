@@ -1,8 +1,18 @@
-const http = require('http');
+const http = require('http')
+const URL = require('url').URL;
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
+    try {
+        const incomingUrl = new URL(request.url, `http://${request.headers.host}`);
+        let name = incomingUrl.searchParams.get('name');
+        let message = `Hello ${name ? name : 'World'}!`;
+        console.log(message);
+        response.end(message);
+    } catch (error) {
+        console.error(error);
+        response.end('There was an error');
+    }
 });
 
 const port = process.env.PORT || 1337;
