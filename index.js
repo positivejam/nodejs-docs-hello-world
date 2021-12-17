@@ -6,7 +6,7 @@ const server = http.createServer((request, response) => {
     try {
         const incomingUrl = new URL(request.url, `http://${request.headers.host}`);
         let name = incomingUrl.searchParams.get('name');
-        name = name.replace(/\W/g, '');
+        name = name?.replace(/\W/g, '');
         let message = `Hello ${name ? name : 'World'}!`;
         console.log(message);
         response.end(message);
