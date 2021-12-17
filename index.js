@@ -1,4 +1,4 @@
-const http = require('http')
+const http = require('http');
 const URL = require('url').URL;
 
 const server = http.createServer((request, response) => {
@@ -7,6 +7,7 @@ const server = http.createServer((request, response) => {
         const incomingUrl = new URL(request.url, `http://${request.headers.host}`);
         let name = incomingUrl.searchParams.get('name');
         let message = `Hello ${name ? name : 'World'}!`;
+        message = message.replace(/\W/g, '');
         console.log(message);
         response.end(message);
     } catch (error) {
